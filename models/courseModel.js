@@ -29,5 +29,6 @@ const courseSchema=new mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:"users"
     },
+
 });
 module.exports=mongoose.model('courses',courseSchema);
