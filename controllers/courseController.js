@@ -56,8 +56,21 @@ const setCourseRating = async (req, res) => {
         console.error(error);
         res.status(500).json({message: 'Error fetching and calculating average ratings'});
     }
-
+}
+const editCourse=async (req,res)=>{
+    const courseId=req.params.courseId;
+    const findCourse=await course.findById(courseId)
+    if(!findCourse){
+        return res.status(404).json({message:"Course not Found"})
+    }
+    try{
+        const updatedCourse=await course.findByIdAndUpdate(courseId,req.body,{new:true})
+        res.json(updatedCourse)
+    }catch (error)
+    {
+        res.status(400).json({message:'Error in updating Course: '+error.message})
+    }
 }
 module.exports = {
-    getCourses, createCourse, setCourseRating
+    getCourses, createCourse, setCourseRating,editCourse
 }
