@@ -13,6 +13,10 @@ const getUsers = ((req, res) => {
     }
 
 })
+//update User
+//Delete User
+//Get All Users
+
 module.exports = {
     getUsers,
 }

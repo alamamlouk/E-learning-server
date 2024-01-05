@@ -62,17 +62,19 @@ const loginUser=async (req,res,next)=>{
             return  next(new HttpError("Invalid credentials",422))
         }
         const{_id:id,username,role}=findUser;
-        const token=jwt.sign({id,username,role},process.env.JWT_SECRECT,{expiresIn: "1d"})
+        const token=jwt.sign({id,username,role},process.env.JWT_SECRECT,{expiresIn: "1h"})
         res.cookie("jwt",token,{
             httpOnly:true,
             secure:true,
             maxAge:24*60*60*1000
         })
-        res.status(200).json({token,id,username,role})
+        res.status(200).json({token,id,username,role,expiresIn: 24*60*60*1000})
     }catch (error){
         return next(new HttpError("Login failed . please check your credentials."+error.message,422))
     }
 }
+
+//To Fix Error handle
 const logOut=(req,res)=>{
     const token=req.headers.authorization;
     if(token){

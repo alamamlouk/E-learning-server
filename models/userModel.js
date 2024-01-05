@@ -14,13 +14,9 @@ const userSchema=new mongoose.Schema({
     },
     firstName:{
         type:String,
-        required:true,
-
     },
     lastName:{
         type:String,
-        required:true,
-
     },
     password:{
         type:String,
@@ -28,7 +24,6 @@ const userSchema=new mongoose.Schema({
     },
     role:{
         type:String,
-        required:true,
         enum:["Student","Instructor","administrator"]
     },
     // profileImage:{
@@ -38,7 +33,6 @@ const userSchema=new mongoose.Schema({
     // },
     phoneNumber:{
         type:Number,
-        required:false
     },
     courseCreated:[{
         type:mongoose.Types.ObjectId,

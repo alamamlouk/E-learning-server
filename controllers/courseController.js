@@ -7,6 +7,7 @@ const getCourses = ((req, res) => {
         .catch((error) => res.status(500).json({msg: error}))
 })
 
+//Fix Error handle
 const createCourse = async (req, res) => {
     try {
         const instructorId = req.params.instructor;
@@ -27,7 +28,9 @@ const createCourse = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: 'Error creating course', error: error.message});
     }
-};
+}
+
+//Fix Error Handle
 const setCourseRating = async (req, res) => {
     const courseId = req.body.courseId;
     const findCourse = course.findById(courseId);
@@ -57,6 +60,7 @@ const setCourseRating = async (req, res) => {
         res.status(500).json({message: 'Error fetching and calculating average ratings'});
     }
 }
+//Fix Error Handle
 const editCourse=async (req,res)=>{
     const courseId=req.params.courseId;
     const findCourse=await course.findById(courseId)
@@ -71,6 +75,14 @@ const editCourse=async (req,res)=>{
         res.status(400).json({message:'Error in updating Course: '+error.message})
     }
 }
+
+//Delete Course
+const deleteCourse=async(req,res)=>{}
+
+//findOneCourse
+const getCourse=async (req,res)=>{}
+
+
 module.exports = {
     getCourses, createCourse, setCourseRating,editCourse
 }
