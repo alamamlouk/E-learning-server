@@ -14,8 +14,8 @@ const courseSchema=new mongoose.Schema({
         require:true
     },
     category:{
-        type:String,
-        required:true
+        type:mongoose.Types.ObjectId,
+        ref:"categories"
     },
     freeOrNot:{
         type:Boolean,
@@ -28,6 +28,10 @@ const courseSchema=new mongoose.Schema({
     instructor:{
         type:mongoose.Types.ObjectId,
         ref:"users"
+    },
+    description:{
+        type:String,
+        required:true
     },
 
 });

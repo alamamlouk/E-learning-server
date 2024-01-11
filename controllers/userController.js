@@ -1,18 +1,19 @@
 const user = require('../models/userModel')
-const getUsers = ((req, res) => {
+const HttpError=require("../models/errorModel")
+
+const getUsers = async (req, res,next) => {
     const role=req.user.role
-    console.log(role)
-    if(role==="administrator")
-    {
-        user.find({})
-            .then(result => res.status(200).json({result}))
-            .catch((error) => res.status(500).json({msg: error}))
-    }
-    else {
-        return res.status(401).json({message:"unauthorized"})
+    try{
+        if(role==="administrator"){
+            const users=await user.find({})
+            res.status(200).json({users})
+        }
+    }catch (error){
+        return next(new  HttpError("couldn't get Users : "+ error.message,422))
     }
 
-})
+
+}
 //update User
 //Delete User
 //Get All Users

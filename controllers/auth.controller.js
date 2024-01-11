@@ -39,7 +39,7 @@ const registerUser=async (req,res,next)=>{
         res.status(201).json(newUser)
         console.log(newUser)
     }catch (error){
-        return  next(new HttpError("User registration failed : "+error.message,422))
+        return  next(new HttpError("User registration failed : "+error.message,500))
 
     }
 }

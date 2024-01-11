@@ -1,21 +1,22 @@
 const course = require("../models/courseModel")
 const User = require("../models/userModel")
 const UserCourse = require('../models/userCourseModel')
+const HttpError = require("../models/errorModel");
 const getCourses = ((req, res) => {
     course.find({}).populate({path: "instructor", select: "email"})
-        .then(result => res.status(200).json({result}))
+        .then(result => res.status(200).json({"courses":result}))
         .catch((error) => res.status(500).json({msg: error}))
 })
 
 //Fix Error handle
-const createCourse = async (req, res) => {
+const createCourse = async (req, res,next) => {
     try {
         const instructorId = req.params.instructor;
         const {courseName, DateOfAddingCourse, TimeToCompleteTheCourse, category, freeOrNot, price} = req.body;
 
         const instructor = await User.findById(instructorId);
         if (!instructor) {
-            return res.status(400).json({message: 'Invalid instructor ID'});
+            return next(new HttpError("Invalid instructor ID :",400))
         }
 
         const newCourse = await course.create({
@@ -26,7 +27,8 @@ const createCourse = async (req, res) => {
 
         res.json({message: 'Course created successfully'});
     } catch (error) {
-        res.status(500).json({message: 'Error creating course', error: error.message});
+
+        return next(new HttpError("Error creating course : "+error.message,500))
     }
 }
 
@@ -84,5 +86,8 @@ const getCourse=async (req,res)=>{}
 
 
 module.exports = {
-    getCourses, createCourse, setCourseRating,editCourse
+    getCourses,
+    createCourse,
+    setCourseRating,
+    editCourse
 }

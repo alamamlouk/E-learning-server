@@ -10,6 +10,7 @@ const auth_routes = require('./routes/auth.routes')
 const user_routes = require("./routes/userRoutes")
 const course_routes=require("./routes/courseRoutes")
 const user_course_routes=require("./routes/userCourseRoutes")
+const category_routers=require('./routes/category.routes')
 const cookieParser = require('cookie-parser');
 
 
@@ -22,6 +23,7 @@ app.use("/api/course",course_routes)
 app.use("/api/auth", auth_routes)
 app.use("/api/user", user_routes)
 app.use("/api/rolledIn",user_course_routes)
+app.use("/api/category",category_routers)
 app.use(notFound)
 app.use(errorHandler)
 connect(process.env.MONGO_URI)
