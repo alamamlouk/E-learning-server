@@ -5,6 +5,7 @@ const {
 } = require('mongoose')
 const {notFound, errorHandler} = require('./middleware/errorMiddleware')
 require('dotenv').config()
+const upload=require("express-fileupload")
 const app = express()
 const auth_routes = require('./routes/auth.routes')
 const user_routes = require("./routes/userRoutes")
@@ -13,10 +14,11 @@ const user_course_routes=require("./routes/userCourseRoutes")
 const category_routers=require('./routes/category.routes')
 const cookieParser = require('cookie-parser');
 
-
+app.use(upload())
 app.use(express.json({extended: true}))
 app.use(express.urlencoded({extended: true}))
 app.use(cors({credentials: true, origin: "http://localhost:4200"}))
+app.use('/uploads',express.static(__dirname+"/uploads"))
 app.use(cookieParser());
 
 app.use("/api/course",course_routes)

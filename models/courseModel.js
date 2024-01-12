@@ -33,6 +33,19 @@ const courseSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    courseImage:{
+        type:String,
+    },
+    lessons:[{
+        lessonName: {
+            type: String,
+            required: true
+        },
+        lessonContent: {
+            type: String,
+            required: true
+        }
+    }]
 
 });
 module.exports=mongoose.model('courses',courseSchema);

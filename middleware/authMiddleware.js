@@ -10,7 +10,8 @@ const authMiddleware=async(req,res,next)=>{
         const token=Authorization.split(' ')[1]
         jwt.verify(token,process.env.JWT_SECRECT,(err,info)=>{
             if(err){
-                return next(new HttpError("Unauthorized. Invalid token.",403))
+
+                return next(new HttpError("Unauthorized. Invalid token."+err.message,403))
             }
             req.user=info;
             const role=req.user.role;
@@ -18,7 +19,7 @@ const authMiddleware=async(req,res,next)=>{
         })
     }
     else{
-        return next(new HttpError("Unauthorized. no token ",402));
+        return next(new HttpError("Unauthorized. no token ",401));
     }
 }
 const adminCheckMiddleware = (req, res, next) => {
