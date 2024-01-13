@@ -4,7 +4,7 @@ const {
     createCategory,
     updateCategory,
     deleteCategory,
-    getCategories
+    getCategories,
 }=require('../controllers/categoryController')
 const authMiddleware=require("../middleware/authMiddleware")
 

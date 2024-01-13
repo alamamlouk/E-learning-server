@@ -8,16 +8,20 @@ const path=require("path")
 const {v4:uuid}=require('uuid')
 const getCourses = ((req, res) => {
     course.find({}).populate([
-        { path: "instructor", select: "email" },
+        { path: "instructor", select: "username" },
         { path: "category", select: "categoryName" }
     ])
         .then(result => res.status(200).json({"courses":result}))
         .catch((error) => res.status(500).json({msg: error}))
 })
+
 const getCourseById=async (req,res,next)=>{
     try{
         const courseId =  req.params.courseId
-        let findCourse = await course.findById(courseId)
+        let findCourse = await course.findById(courseId).populate([
+            { path: "instructor", select: "username" },
+            { path: "category", select: "categoryName" }
+        ])
         if (!findCourse) {
             return next(new HttpError("course not found", 400))
         }
@@ -142,7 +146,19 @@ const editCourse=async (req,res)=>{
 }
 
 //Delete Course
-const deleteCourse=async(req,res)=>{}
+const deleteCourse=async(req,res,next)=>{
+    try {
+        const courseId=req.params.courseId;
+        const findCourse= await course.findById(courseId)
+        if(!findCourse){
+            return next(new HttpError("course not found ",400))
+        }
+        await course.findByIdAndDelete(courseId)
+        res.status(202).json({message:"course Deleted"})
+    }catch (error){
+        return next(new HttpError(error))
+    }
+}
 
 //findOneCourse
 const getCourse=async (req,res)=>{}
@@ -164,7 +180,10 @@ const getCoursesByInstructor=async (req,res,next)=>{
         if (!instructorId) {
             return next(new HttpError("Instructor not found", 400))
         }
-        const findCourses = await course.find({instructor: instructorId})
+        const findCourses = await course.find({instructor: instructorId}).populate([
+            { path: "instructor", select: "username" },
+            { path: "category", select: "categoryName" }
+        ])
         res.status(200).json(findCourses)
     }
     catch (error)
@@ -181,5 +200,6 @@ module.exports = {
     editCourse,
     addLessons,
     testFile,
-    getCourseById
+    getCourseById,
+    deleteCourse
 }
