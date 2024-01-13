@@ -33,6 +33,9 @@ const getCourseById=async (req,res,next)=>{
 //Fix Error handle
 const createCourse = async (req, res,next) => {
     try {
+        if(req.user.role!=="Instructor"){
+            return next(new HttpError("User is Unauthorized",403))
+        }
         const instructorId = req.user.id;
         const {courseName, DateOfAddingCourse, TimeToCompleteTheCourse, categoryId, freeOrNot, price,description} = req.body;
         //const lessons=req.body.lessons

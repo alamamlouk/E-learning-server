@@ -6,8 +6,9 @@ const{
     rateCourse,
     setQcmScore
 }=require('../controllers/userCoursControllere')
-router.post('/',enrollInCourse)
-router.get('/',getAll)
-router.put('/:rate',rateCourse)
-router.put('/qcmScore/:score',setQcmScore)
+const authMiddleware=require("../middleware/authMiddleware")
+router.post('/',authMiddleware.authMiddleware,enrollInCourse)
+router.get('/',authMiddleware.authMiddleware,getAll)
+router.put('/:rate',authMiddleware.authMiddleware,rateCourse)
+router.put('/qcmScore/:score',authMiddleware.authMiddleware,setQcmScore)
 module.exports=router

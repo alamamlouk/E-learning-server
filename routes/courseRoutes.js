@@ -17,9 +17,8 @@ router.get('/',getCourses);
 router.post('/createCourse',authMiddleware.authMiddleware,createCourse)
 router.get('/getCourseRating',setCourseRating)
 router.put('/editCourse/:courseId',authMiddleware.authMiddleware,editCourse)
-router.post('/testUploadFile',testFile)
 router.get('/getInstructorCourses',authMiddleware.authMiddleware,getCoursesByInstructor)
 router.put('/addLessons/:courseId',authMiddleware.authMiddleware,addLessons)
-router.get('/getCourse/:courseId',authMiddleware.authMiddleware,getCourseById)
+router.get('/getCourse/:courseId',getCourseById)
 router.delete('/deleteCourse/:courseId',authMiddleware.authMiddleware,deleteCourse)
 module.exports=router

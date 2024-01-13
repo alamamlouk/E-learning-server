@@ -11,8 +11,6 @@ const getUsers = async (req, res,next) => {
     }catch (error){
         return next(new  HttpError("couldn't get Users : "+ error.message,422))
     }
-
-
 }
 //update User
 //Delete User
